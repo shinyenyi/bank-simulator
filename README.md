@@ -1,10 +1,16 @@
 # BankSimulator
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.2.1.
+the project as suggested by its name simulates a dummy bank online setup.
 
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Project flow
+After running the dev server,
+You start by inputing and searching the customers account on enter account page if its correct and it exists you continue;
+Now your on customers account where they can access their balance they can deposit withdraw or transfer cash
 
 ## Code scaffolding
 
