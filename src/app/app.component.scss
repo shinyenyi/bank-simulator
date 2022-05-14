@@ -1,0 +1,34 @@
+
+.buttons{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+// mat-card-actions{
+//     display: flex;
+//     flex-direction: row;
+//     justify-content: right;
+// }
+
+mat-toolbar {
+    justify-content: center;
+}
+
+mat-card {
+    width: 400px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+}
+
+button{
+    margin: 10px;
+}
