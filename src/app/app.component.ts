@@ -22,7 +22,7 @@ export class AppComponent {
   recipientBalance: number = 0;
   account?: Account;
   recipientAccount?: Account;
-  amount: number = 0;
+  amount: number | undefined;
   accountNo: string = '';
   recipientAccountNo: string = '';
 
@@ -63,7 +63,7 @@ export class AppComponent {
   }
 
   cancel() {
-    this.amount = 0;
+    this.amount = undefined;
     this.searchAccountDisplay = false;
     this.accountDisplay = true;
     this.depositDisplay = false;
@@ -97,7 +97,12 @@ export class AppComponent {
   }
 
   deposit() {
-    this.currentBalance = (this.account?.balance === undefined ? 0 : this.account.balance) + this.amount;
+    if((this.amount === undefined ? 0 : this.amount) <= 0){
+      this.openSnackBar("Insufficient amount", 'X', 3000, 'white-snackbar');
+      return;
+    }
+
+    this.currentBalance = (this.account?.balance === undefined ? 0 : this.account.balance) + (this.amount === undefined ? 0 : this.amount);
 
     let account: Account = { name: this.accountName, balance: this.currentBalance, accountNo: this.accountNo };
 
@@ -109,11 +114,15 @@ export class AppComponent {
   }
 
   withdraw() {
-    if ((this.account?.balance === undefined ? 0 : this.account.balance) < this.amount) {
+    if((this.amount === undefined ? 0 : this.amount) <= 0){
+      this.openSnackBar("Insufficient amount", 'X', 3000, 'white-snackbar');
+      return;
+    }
+    if ((this.account?.balance === undefined ? 0 : this.account.balance) < (this.amount === undefined ? 0 : this.amount)) {
       this.openSnackBar("Insufficient balance", 'X', 3000, 'white-snackbar');
       this.cancel();
     } else {
-      this.currentBalance = (this.account?.balance === undefined ? 0 : this.account.balance) - this.amount;
+      this.currentBalance = (this.account?.balance === undefined ? 0 : this.account.balance) - (this.amount === undefined ? 0 : this.amount);
 
       let account: Account = { name: this.accountName, balance: this.currentBalance, accountNo: this.accountNo };
 
@@ -137,17 +146,22 @@ export class AppComponent {
 
     this.recipientAccount = recipientAccount;
 
+    if((this.amount === undefined ? 0 : this.amount) <= 0){
+      this.openSnackBar("Insufficient amount", 'X', 3000, 'white-snackbar');
+      return;
+    }
+
     if (!recipientAccount) {
       this.openSnackBar("Account doesn't exist", 'X', 3000, 'white-snackbar');
       return;
-    } else if ((this.account?.balance === undefined ? 0 : this.account.balance) < this.amount) {
+    } else if ((this.account?.balance === undefined ? 0 : this.account.balance) < (this.amount === undefined ? 0 : this.amount)) {
       this.openSnackBar("Insufficient balance", 'X', 3000, 'white-snackbar');
       this.cancel();
     } else {
 
       this.recipientAccountNo = (this.recipientAccount?.accountNo === undefined ? '' : this.recipientAccount.accountNo);
 
-      this.currentBalance = (this.account?.balance === undefined ? 0 : this.account.balance) - this.amount;
+      this.currentBalance = (this.account?.balance === undefined ? 0 : this.account.balance) - (this.amount === undefined ? 0 : this.amount);
 
       let account: Account = { name: this.accountName, balance: this.currentBalance, accountNo: this.accountNo };
 
@@ -155,7 +169,7 @@ export class AppComponent {
 
       this.account = account;
 
-      this.recipientBalance = (this.recipientAccount?.balance === undefined ? 0 : this.recipientAccount.balance) + this.amount;
+      this.recipientBalance = (this.recipientAccount?.balance === undefined ? 0 : this.recipientAccount.balance) + (this.amount === undefined ? 0 : this.amount);
 
       let recipientAccount: Account = { name: this.recipientName, balance: this.recipientBalance, accountNo: this.recipientAccountNo };
       console.log(this.recipientName, this.recipientAccountNo, this.recipientBalance);
